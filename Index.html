@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>EcoLearn - Learn Sustainability Through Action</title>
+  <link rel="stylesheet" href="style.css">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    /* hero layout and responsive image sizing */
+    .hero-grid {
+      display: flex;
+      align-items: center;
+      gap: 2rem;
+      flex-wrap: wrap;
+    }
+    .hero-image {
+      flex: 1 1 320px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+    .hero-image img {
+      width: 100%;
+      max-width: 420px; /* default max */
+      height: auto;
+      border-radius: 12px;
+      object-fit: cover;
+      box-shadow: 0 8px 24px rgba(0,0,0,0.12);
+      transition: transform 0.25s ease;
+      display: block;
+    }
+    .hero-image img:hover { transform: scale(1.03); }
+    .hero-text h1 {
+      font-size: 2.4rem;
+      line-height: 1.05;
+      margin: 0 0 12px;
+    }
+
+    /* larger screens */
+    @media (min-width: 900px) {
+      .hero-text { flex: 1 1 480px; }
+      .hero-image img { max-width: 520px; }
+      .hero-text h1 { font-size: 3.2rem; }
+    }
+
+    /* small screens */
+    @media (max-width: 640px) {
+      .hero-image img { max-width: 320px; }
+      .hero-text h1 { font-size: 1.8rem; }
+      .hero-grid { gap: 1rem; }
+    }
+
+    /* Removed Auth modal styles */
+  </style>
+</head>
+<body>
+  <!-- Header -->
+  <header class="header">
+    <div class="container nav-container">
+      <div class="logo">🌱 EcoLearn</div>
+      <nav>
+        <a href="#challenges">Explore Challenges</a>
+        <a href="dashboard.html" class="btn-primary" id="get-started-top">Get Started</a>
+      </nav>
+    </div>
+  </header>
+
+  <!-- Hero -->
+  <section class="hero">
+    <div class="container hero-grid">
+      <div class="hero-text">
+        <span class="badge">Join 2,847+ Eco Warriors</span>
+        <h1>Learn Sustainability <span class="highlight">Through Action</span></h1>
+        <p>Complete real-world environmental challenges, earn points, compete with peers, and make a positive impact on our planet.</p>
+        <div class="buttons">
+          <a href="dashboard.html" class="btn-primary" id="get-started-hero">Start Your Journey</a>
+          <a href="#challenges" class="btn-secondary">Browse Challenges</a>
+        </div>
+        <div class="stats">
+          <div><strong>2,847</strong><span>Active Students</span></div>
+          <div><strong>15,000+</strong><span>Challenges Completed</span></div>
+        </div>
+      </div>
+      <div class="hero-image">
+        <img src="hero-image-F3e0OfrN.jpg" alt="Students planting trees">
+      </div>
+    </div>
+  </section>
+
+  <!-- Impact Bar -->
+  <section class="impact">
+    <div class="container impact-grid">
+      <div><h3>2,847</h3><p>Active Students</p></div>
+      <div><h3>15,000+</h3><p>Challenges Completed</p></div>
+      <div><h3>500kg</h3><p>CO₂ Saved</p></div>
+      <div><h3>98%</h3><p>Engagement Rate</p></div>
+    </div>
+  </section>
+
+  <!-- Features -->
+  <section class="features" id="challenges">
+    <div class="container">
+      <h2>Why Choose EcoLearn?</h2>
+      <p>Transform environmental education through gamified, action-based learning that creates real-world impact.</p>
+      <div class="features-grid">
+        <div class="feature-card">🌍<h3>Interactive Challenges</h3><p>Complete real-world challenges and earn points.</p></div>
+        <div class="feature-card">🎮<h3>Gamified Learning</h3><p>Compete with peers and unlock achievements.</p></div>
+        <div class="feature-card">🤝<h3>Community Impact</h3><p>Join a global community of eco-warriors.</p></div>
+        <div class="feature-card">📊<h3>Track Progress</h3><p>Monitor your impact and see real results.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="cta" id="start">
+    <div class="container">
+      <h2>Ready to Make an Impact?</h2>
+      <p>Join thousands of students worldwide who are creating positive change.</p>
+      <a href="dashboard.html" class="btn-primary" id="get-started-cta">Start Learning Now</a>
+      <a href="#challenges" class="btn-secondary">View Challenges</a>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    <p>&copy; 2025 EcoLearn Platform. All rights reserved.</p>
+  </footer>
+
+  <!-- add demo-login handler so Get Started opens dashboard with a demo session -->
+  <script>
+    (function(){
+      const demoUser = { email: 'demo@ecolearn.test', password: 'Password123', name: 'Demo User' };
+      function demoLogin(e){
+        e.preventDefault();
+        try { sessionStorage.setItem('ecolearn_auth', JSON.stringify(demoUser)); } catch(_) {}
+        window.location.href = 'dashboard.html';
+      }
+      ['get-started-top','get-started-hero','get-started-cta'].forEach(id => {
+        const el = document.getElementById(id);
+        if (el) el.addEventListener('click', demoLogin);
+      });
+    })();
+  </script>
+</body>
+</html>
+        </div>
+        <div class="stats">
+          <div><strong>2,847</strong><span>Active Students</span></div>
+          <div><strong>15,000+</strong><span>Challenges Completed</span></div>
+        </div>
+      </div>
+      <div class="hero-image">
+        <img src="hero-image-F3e0OfrN.jpg" alt="Students planting trees">
+      </div>
+    </div>
+  </section>
+
+  <!-- Impact Bar -->
+  <section class="impact">
+    <div class="container impact-grid">
+      <div><h3>2,847</h3><p>Active Students</p></div>
+      <div><h3>15,000+</h3><p>Challenges Completed</p></div>
+      <div><h3>500kg</h3><p>CO₂ Saved</p></div>
+      <div><h3>98%</h3><p>Engagement Rate</p></div>
+    </div>
+  </section>
+
+  <!-- Features -->
+  <section class="features" id="challenges">
+    <div class="container">
+      <h2>Why Choose EcoLearn?</h2>
+      <p>Transform environmental education through gamified, action-based learning that creates real-world impact.</p>
+      <div class="features-grid">
+        <div class="feature-card">🌍<h3>Interactive Challenges</h3><p>Complete real-world challenges and earn points.</p></div>
+        <div class="feature-card">🎮<h3>Gamified Learning</h3><p>Compete with peers and unlock achievements.</p></div>
+        <div class="feature-card">🤝<h3>Community Impact</h3><p>Join a global community of eco-warriors.</p></div>
+        <div class="feature-card">📊<h3>Track Progress</h3><p>Monitor your impact and see real results.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="cta" id="start">
+    <div class="container">
+      <h2>Ready to Make an Impact?</h2>
+      <p>Join thousands of students worldwide who are creating positive change.</p>
+      <a href="registration.html" class="btn-primary">Start Learning Now</a>
+      <a href="#challenges" class="btn-secondary">View Challenges</a>
+    </div>
+  </section>
+
+  <!-- Auth modal (register / login) -->
+  <div id="authOverlay" class="auth-overlay" aria-hidden="true" role="dialog" aria-modal="true">
+    <div class="auth-panel" role="document">
+      <button id="authClose" class="auth-close" aria-label="Close authentication panel">✕</button>
+      <div class="auth-left">
+        <h3 id="authTitle">Create your EcoLearn account</h3>
+        <div class="auth-tabs" role="tablist" aria-label="Authentication tabs">
+          <button class="auth-tab active" data-tab="register" role="tab" aria-selected="true">Register</button>
+          <button class="auth-tab" data-tab="login" role="tab" aria-selected="false">Login</button>
+        </div>
+
+        <form id="registerForm" class="auth-form active" autocomplete="on">
+          <input name="name" type="text" placeholder="Full name" required>
+          <input name="email" type="email" placeholder="Email address" required>
+          <input name="password" type="password" placeholder="Password" required>
+          <div class="auth-actions">
+            <button type="submit" class="btn-primary">Register</button>
+            <a href="registration.html" class="btn-secondary">Open full page</a>
+          </div>
+        </form>
+
+        <form id="loginForm" class="auth-form" autocomplete="on">
+          <input name="email" type="email" placeholder="Email address" required>
+          <input name="password" type="password" placeholder="Password" required>
+          <div class="auth-actions">
+            <button type="submit" class="btn-primary">Login</button>
+            <a href="registration.html" class="btn-secondary">Open full page</a>
+          </div>
+        </form>
+      </div>
+      <div class="auth-right" aria-hidden="true">
+        <div>Welcome to EcoLearn</div>
+        <div style="font-size:0.9rem;color:#175a3a;">Join thousands learning sustainability through action.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer>
+    <p>&copy; 2025 EcoLearn Platform. All rights reserved.</p>
+  </footer>
+
+  <script>
+    // intercept registration links and open modal
+    (function(){
+      const overlay = document.getElementById('authOverlay');
+      const closeBtn = document.getElementById('authClose');
+      const tabs = document.querySelectorAll('.auth-tab');
+      const forms = { register: document.getElementById('registerForm'), login: document.getElementById('loginForm') };
+      const title = document.getElementById('authTitle');
+      const STORAGE_KEY = 'ecolearn_user';
+      const DEMO_USER = { email: 'demo@ecolearn.test', password: 'Password123', name: 'Demo User' };
+
+      function openAuth(initialTab = 'register') {
+        overlay.classList.add('show');
+        overlay.setAttribute('aria-hidden','false');
+        switchTo(initialTab);
+        // focus first input
+        const firstInput = forms[initialTab].querySelector('input');
+        if(firstInput) firstInput.focus();
+        document.body.style.overflow = 'hidden';
+      }
+      function closeAuth() {
+        overlay.classList.remove('show');
+        overlay.setAttribute('aria-hidden','true');
+        document.body.style.overflow = '';
+      }
+      function switchTo(tab) {
+        tabs.forEach(t => {
+          const is = t.dataset.tab === tab;
+          t.classList.toggle('active', is);
+          t.setAttribute('aria-selected', is ? 'true' : 'false');
+        });
+        Object.keys(forms).forEach(k => forms[k].classList.toggle('active', k === tab));
+        title.textContent = tab === 'register' ? 'Create your EcoLearn account' : 'Welcome back';
+      }
+
+      // attach to tabs
+      tabs.forEach(t => t.addEventListener('click', () => switchTo(t.dataset.tab)));
+
+      // close handlers
+      closeBtn.addEventListener('click', closeAuth);
+      overlay.addEventListener('click', (e) => { if (e.target === overlay) closeAuth(); });
+      document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeAuth(); });
+
+      // intercept links to registration.html
+      document.querySelectorAll('a[href="registration.html"]').forEach(a => {
+        a.addEventListener('click', (e) => {
+          e.preventDefault();
+          // open register tab by default
+          openAuth('register');
+        });
+      });
+
+      // basic submit handlers (prevent default and simulate)
+      // Helper: get stored user
+      function getStoredUser() {
+        try {
+          const raw = localStorage.getItem(STORAGE_KEY);
+          return raw ? JSON.parse(raw) : null;
+        } catch (err) { return null; }
+      }
+
+      // Register form: save basic user to localStorage (demo flow)
+      forms.register.addEventListener('submit', (ev) => {
+        ev.preventDefault();
+        const name = forms.register.querySelector('input[name="name"]').value.trim();
+        const email = forms.register.querySelector('input[name="email"]').value.trim();
+        const password = forms.register.querySelector('input[name="password"]').value;
+        if (!name || !email || !password) {
+          alert('Please fill all fields to register.');
+          return;
+        }
+        const user = { name, email, password };
+        try {
+          localStorage.setItem(STORAGE_KEY, JSON.stringify(user));
+          try { sessionStorage.setItem('ecolearn_auth', JSON.stringify(user)); } catch(e){ }
+          // redirect to dashboard
+          window.location.href = 'dashboard.html';
+        } catch (err) {
+          alert('Could not save account locally.');
+        }
+      });
+
+      // Login form: validate against stored user or demo fallback
+      forms.login.addEventListener('submit', (ev) => {
+        ev.preventDefault();
+        const email = forms.login.querySelector('input[name="email"]').value.trim();
+        const password = forms.login.querySelector('input[name="password"]').value;
+        const stored = getStoredUser();
+        const ok = (stored && stored.email === email && stored.password === password) ||
+                   (email === DEMO_USER.email && password === DEMO_USER.password);
+        if (ok) {
+          const sessionUser = (stored && stored.email === email) ? stored : DEMO_USER;
+          try { sessionStorage.setItem('ecolearn_auth', JSON.stringify(sessionUser)); } catch(e) { }
+          window.location.href = 'dashboard.html';
+        } else {
+          alert('Invalid email or password. Please try again or register.');
+        }
+      });
+    })();
+  </script>
+</body>
+</html>

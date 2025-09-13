@@ -1,0 +1,467 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>EcoLearn Dashboard</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-green: #259a5a;
+            --header-bg: #259a5a;
+            --logo-black: #222;
+            --nav-white: #fff;
+            --light-green-bg: #e8f5e9;
+            --muted-bg: #f9f9f9;
+            --light-text: #757575;
+        }
+        body {
+            font-family: 'Poppins', sans-serif;
+            margin: 0;
+            background: var(--muted-bg);
+            min-height: 100vh;
+            width: 100vw;
+            box-sizing: border-box;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: flex-start;
+            /* offset for fixed header */
+            padding-top: 76px;
+        }
+        .container {
+            max-width: 1200px;
+            width: 100%;
+            margin: 0 auto;
+            padding: 0 24px;
+            box-sizing: border-box;
+        }
+        .dashboard-header {
+            background: var(--header-bg);
+            color: var(--nav-white);
+            padding: 0 0;
+            box-shadow: 0 6px 18px rgba(37,154,90,0.12);
+            width: 100%;
+            position: fixed;
+            top: 0;
+            left: 0;
+            z-index: 1200;
+            height: 76px;
+            display: flex;
+            align-items: center;
+        }
+        .dashboard-header .container {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 24px;
+        }
+        .logo {
+            display: flex;
+            align-items: center;
+            font-weight: 800;
+            font-size: 1.15rem;
+            color: var(--nav-white);
+            letter-spacing: 0.5px;
+            gap: 0.75rem;
+            text-decoration: none;
+            padding-left: 8px;
+        }
+        .logo svg {
+            margin-right: 0.5rem;
+        }
+        .dashboard-nav {
+            display: flex;
+            gap: 12px;
+            margin-left: 16px;
+            align-items: center;
+        }
+        .dashboard-nav a, .dashboard-nav button {
+            color: var(--nav-white);
+            font-weight: 600;
+            text-decoration: none;
+            padding: 8px 14px;
+            border-radius: 22px;
+            background: rgba(255,255,255,0.06);
+            border: 1px solid rgba(255,255,255,0.04);
+            cursor: pointer;
+            font-size: 0.95rem;
+            transition: background 0.18s, transform 0.12s;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .dashboard-nav a.active, .dashboard-nav a:hover, .dashboard-nav button:hover {
+            background: rgba(255,255,255,0.12);
+            transform: translateY(-1px);
+        }
+        .btn-secondary {
+            background: linear-gradient(90deg,#fff,#f1fff1);
+            color: #186a3d;
+            border: 1px solid rgba(255,255,255,0.06);
+            padding: 8px 12px;
+            border-radius: 18px;
+            font-weight:700;
+        }
+        .btn-secondary:hover {
+            background: linear-gradient(90deg,#f1fff1,#e6f8e6);
+            transform: translateY(-2px);
+        }
+        .btn-outline {
+            background: transparent;
+            color: #fff;
+            border: 1px solid rgba(255,255,255,0.12);
+            padding: 8px 12px;
+            border-radius: 18px;
+        }
+        .btn-outline:hover {
+            background: rgba(255,255,255,0.08);
+            transform: translateY(-2px);
+        }
+        .dashboard-main {
+            padding: 2.5rem 0 3.5rem 0;
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .welcome {
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+            color: var(--primary-green);
+        }
+        .dashboard-cards,
+        .recommended-grid {
+            width: 100%;
+            box-sizing: border-box;
+        }
+        .dashboard-cards {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 1.25rem;
+            margin-bottom: 2rem;
+        }
+        .dashboard-card {
+            background: #fff;
+            border-radius: 12px;
+            box-shadow: 0 6px 18px rgba(33,150,243,0.06);
+            padding: 1.25rem;
+            border: 1px solid rgba(33,150,243,0.06);
+            transition: transform 0.16s, box-shadow 0.16s;
+        }
+        .dashboard-card:hover { transform: translateY(-6px); box-shadow: 0 18px 40px rgba(33,150,243,0.08); }
+        .dashboard-card strong {
+            font-size: 1.5rem;
+            color: var(--primary-green);
+        }
+        .impact-section {
+            background: #fff;
+            border-radius: 12px;
+            box-shadow: 0 6px 18px rgba(33,150,243,0.06);
+            padding: 1.25rem;
+            margin-bottom: 2rem;
+            display: flex;
+            gap: 2rem;
+            justify-content: space-between;
+        }
+        .impact-item { text-align: center; }
+        .impact-item .impact-value {
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: var(--primary-green);
+        }
+        .progress-section {
+            background: #fff;
+            border-radius: 12px;
+            box-shadow: 0 6px 18px rgba(33,150,243,0.06);
+            padding: 1.25rem;
+            margin-bottom: 2rem;
+        }
+        .progress-bar {
+            background: #f1f9f3;
+            border-radius: 999px;
+            height: 14px;
+            width: calc(100% - 120px);
+            margin: 0.7rem 0 1rem 0;
+            overflow: hidden;
+            display: inline-block;
+            vertical-align: middle;
+        }
+        .progress-bar-inner {
+            background: linear-gradient(90deg, #43A047, #1B5E20);
+            height: 100%;
+            width: 70%;
+            border-radius: 999px;
+            transition: width 0.6s;
+        }
+        .progress-pill {
+            display: inline-block;
+            background: #fff;
+            border-radius: 999px;
+            padding: 6px 10px;
+            font-weight:700;
+            border: 1px solid rgba(33,150,243,0.06);
+            float: right;
+            margin-top: -2px;
+        }
+        .recommended-section { margin-bottom: 2rem; }
+        .recommended-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+        .challenge-card {
+            background: #fff;
+            border-radius: 12px;
+            box-shadow: 0 8px 24px rgba(33,150,243,0.04);
+            padding: 1.25rem;
+            border: 1px solid rgba(33,150,243,0.06);
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+        .challenge-card .challenge-title {
+            font-size: 1.1rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+        .challenge-meta {
+            display: flex;
+            gap: 0.7rem;
+            margin-bottom: 0.7rem;
+        }
+        .challenge-meta span {
+            font-size: 0.85rem;
+            background: #e8f5e9;
+            color: #219150;
+            border-radius: 6px;
+            padding: 0.2rem 0.7rem;
+            font-weight: 500;
+        }
+        .challenge-points {
+            color: #388E3C;
+            font-weight: 600;
+        }
+        .challenge-desc {
+            color: #757575;
+            font-size: 0.95rem;
+            margin-bottom: 1rem;
+        }
+        .challenge-info {
+            font-size: 0.85rem;
+            color: #757575;
+            margin-bottom: 1rem;
+        }
+    .challenge-card .btn { width: 100%; background: linear-gradient(90deg,#219150,#1b8b45); color:#fff; border:none; padding:10px 14px; border-radius:10px; box-shadow:0 6px 18px rgba(33,150,243,0.06); }
+    .challenge-card .btn:hover { transform: translateY(-2px); }
+        .dashboard-footer {
+            margin-top: 3rem;
+            padding: 2rem 0;
+            background: #e8f5e9;
+            text-align: center;
+            color: #757575;
+            font-size: 0.95rem;
+            width: 100%;
+        }
+        @media (max-width: 992px) {
+            .container {
+                max-width: 900px;
+            }
+            .dashboard-cards, .recommended-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+            .impact-section {
+                flex-direction: column;
+                gap: 1rem;
+            }
+        }
+        @media (max-width: 768px) {
+            .container {
+                max-width: 98vw;
+                padding: 0 8px;
+            }
+            .dashboard-cards, .recommended-grid {
+                grid-template-columns: 1fr;
+            }
+            .dashboard-header .container { padding: 0 12px; }
+        }
+    </style>
+</head>
+<body>
+    <header class="dashboard-header">
+        <div class="container">
+            <div style="display:flex;align-items:center;gap:8px;">
+                <a href="Index.html" class="logo">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="color:#fff;"><path d="M11 20A7 7 0 0 1 9.8 6.1C15.5 5 17 4.48 19 2c1 2 2 4.18 2 8 0 5.5-4.78 10-10 10Z"></path></svg>
+                    <span style="font-weight:800;color:#fff;">EcoLearn</span>
+                </a>
+            </div>
+            <nav class="dashboard-nav">
+                <a href="dashboard.html" class="active">Dashboard</a>
+                <a href="challenges.html">Challenges</a>
+                <a href="leaderboard.html">Leaderboard</a>
+                <a href="profile.html">Profile</a>
+                <button id="logout-btn" class="btn btn-secondary" style="margin-left:6px;">Log Out</button>
+                
+            </nav>
+        </div>
+    </header>
+    <main class="dashboard-main container fade-in">
+        <div class="welcome" id="welcome-name">Welcome back, Eco Warrior! <span style="font-size:1.5rem;">🌱</span></div>
+        <div style="color:var(--light-text);margin-bottom:2rem;">Ready to make a positive impact today?</div>
+        <div class="dashboard-cards">
+            <div class="dashboard-card">
+                <div>Total Points</div>
+                <strong>285</strong>
+                <div style="color:var(--light-text);font-size:0.95rem;">+25 from last week</div>
+            </div>
+            <div class="dashboard-card">
+                <div>Challenges Completed</div>
+                <strong>11</strong>
+                <div style="color:var(--light-text);font-size:0.95rem;">6 of 6 available</div>
+            </div>
+            <div class="dashboard-card">
+                <div>Current Streak</div>
+                <strong>7 days</strong>
+                <div style="color:var(--light-text);font-size:0.95rem;">Keep it up!</div>
+            </div>
+            <div class="dashboard-card">
+                <div>Leaderboard Rank</div>
+                <strong>#15</strong>
+                <div style="color:var(--light-text);font-size:0.95rem;">↑ 3 positions</div>
+            </div>
+        </div>
+        <div class="impact-section">
+            <div class="impact-item">
+                <div style="font-size:1.5rem;">🍃</div>
+                <div class="impact-value">45.2kg</div>
+                <div style="color:var(--light-text);">CO₂ Saved</div>
+            </div>
+            <div class="impact-item">
+                <div style="font-size:1.5rem;">♻️</div>
+                <div class="impact-value">12.8kg</div>
+                <div style="color:var(--light-text);">Waste Reduced</div>
+            </div>
+            <div class="impact-item">
+                <div style="font-size:1.5rem;">⚡</div>
+                <div class="impact-value">156.5kWh</div>
+                <div style="color:var(--light-text);">Energy Saved</div>
+            </div>
+        </div>
+        <div class="progress-section">
+            <div style="font-weight:600;margin-bottom:0.5rem;">Progress to Next Badge</div>
+            <div style="color:var(--light-text);margin-bottom:0.5rem;">Energy Saver Badge</div>
+            <div style="display:flex;align-items:center;gap:12px;justify-content:space-between;">
+                <div style="flex:1;">
+                    <div class="progress-bar">
+                        <div class="progress-bar-inner" style="width:70%"></div>
+                    </div>
+                </div>
+                <div class="progress-pill">7/10</div>
+            </div>
+            <div style="margin-top:8px;font-size:0.95rem;color:var(--light-text);">Complete 3 more energy-related challenges to earn this badge!</div>
+        </div>
+        <section class="recommended-section">
+            <div class="recommended-header">
+                <div style="font-weight:600;font-size:1.2rem;">Recommended for You</div>
+                <a href="challenges.html" class="btn btn-secondary">View All Challenges</a>
+            </div>
+            <div class="recommended-grid">
+                <div class="challenge-card">
+                    <div class="challenge-title">Plant a Tree <span class="challenge-points">25pts</span></div>
+                    <div class="challenge-meta">
+                        <span>Medium</span>
+                        <span>Conservation</span>
+                    </div>
+                    <div class="challenge-desc">Plant and care for a sapling in your community. Document the process with photos and share your experience.</div>
+                    <div class="challenge-info">⏱ 2-3 hours &nbsp; 👥 1,247 participants</div>
+                    <button class="btn btn-primary">Start Challenge</button>
+                </div>
+                <div class="challenge-card">
+                    <div class="challenge-title">Zero Waste Week <span class="challenge-points">50pts</span></div>
+                    <div class="challenge-meta">
+                        <span>Hard</span>
+                        <span>Waste Reduction</span>
+                    </div>
+                    <div class="challenge-desc">Practice zero waste living for one week. Track your progress and share tips with the community.</div>
+                    <div class="challenge-info">⏱ 1 week &nbsp; 👥 892 participants</div>
+                    <button class="btn btn-primary">Start Challenge</button>
+                </div>
+                <div class="challenge-card">
+                    <div class="challenge-title">Energy Audit <span class="challenge-points">30pts</span></div>
+                    <div class="challenge-meta">
+                        <span>Medium</span>
+                        <span>Energy</span>
+                    </div>
+                    <div class="challenge-desc">Conduct a home energy audit and implement 3 energy-saving measures. Report your findings.</div>
+                    <div class="challenge-info">⏱ 4-5 hours &nbsp; 👥 634 participants</div>
+                    <button class="btn btn-primary">Start Challenge</button>
+                </div>
+            </div>
+        </section>
+    </main>
+    <footer class="dashboard-footer">
+        © 2025 EcoLearn Platform - Learning sustainability through action
+    </footer>
+    <script src="dashboard.js"></script>
+    <script>if(typeof dashboardInit === 'undefined'){ console.warn('dashboard.js not found or does not expose dashboardInit; continuing.'); }</script>
+    <script>
+        // Auth check and personalization
+        (function(){
+            const STORAGE_KEY = 'ecolearn_user';
+            const DEMO_USER = { email: 'demo@ecolearn.test', password: 'Password123', name: 'Demo User' };
+
+            function getSessionUser() {
+                try {
+                    const s = sessionStorage.getItem('ecolearn_auth');
+                    return s ? JSON.parse(s) : null;
+                } catch(e){ return null; }
+            }
+            function getStoredUser() {
+                try {
+                    const s = localStorage.getItem(STORAGE_KEY);
+                    return s ? JSON.parse(s) : null;
+                } catch(e){ return null; }
+            }
+
+            const sessionUser = getSessionUser();
+            const storedUser = getStoredUser();
+            const user = sessionUser || storedUser || null;
+            if (!user) {
+                // no session, redirect to login/registration
+                window.location.href = 'registeration.html';
+                return;
+            }
+
+            // personalize welcome
+            const welcomeEl = document.getElementById('welcome-name');
+            if (welcomeEl) {
+                const displayName = (user.name) ? user.name.split(' ')[0] : (user.email || 'Eco Warrior');
+                welcomeEl.innerHTML = `Welcome back, ${escapeHtml(displayName)}! <span style="font-size:1.5rem;">🌱</span>`;
+            }
+
+            // logout: clear session (but keep localStorage account) and go to registration/login
+            const logoutBtn = document.getElementById('logout-btn');
+            if (logoutBtn) {
+                logoutBtn.addEventListener('click', function(){
+                    try {
+                        sessionStorage.removeItem('ecolearn_auth');
+                    } catch(e){}
+                    // redirect to registration/login page
+                    window.location.href = 'registeration.html';
+                });
+            }
+
+            // safe guard for optional back button
+            const backBtn = document.getElementById('back-btn');
+            if (backBtn) {
+                backBtn.addEventListener('click', () => { window.location.href = 'Index.html'; });
+            }
+
+            // simple HTML escape
+            function escapeHtml(str){ return String(str).replace(/[&<>"']/g, (m)=>({ '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;' }[m])); }
+        })();
+    </script>
+</body>
+</html>

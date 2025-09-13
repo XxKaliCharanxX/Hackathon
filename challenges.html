@@ -1,0 +1,588 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EcoLearn Platform - Challenges</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+	:root {
+		--primary-green: #259a5a; /* unified with dashboard */
+		--primary-green-2: #1b8b45;
+		--header-bg-start: #259a5a;
+		--header-bg-end: #1b8b45;
+		--header-height: 76px;
+		--logo-black: #222;
+		--nav-white: #fff;
+		--muted: #6b6b6b;
+		--container-max: 1200px;
+		--card-shadow: 0 12px 30px rgba(33,150,243,0.06);
+	}
+
+	/* Challenges styles */
+	body {
+		font-family: 'Poppins', sans-serif;
+		margin: 0;
+		padding: 0;
+		box-sizing: border-box;
+		/* keep top offset in sync with header height */
+		padding-top: var(--header-height);
+		background: #f7fbf7;
+		color: #222;
+	}
+
+	/* Replace previous main-header styles with dashboard-style header */
+	.dashboard-header {
+		background: var(--header-bg-start);
+		/* using single color like dashboard to ensure consistent look */
+		color: var(--nav-white);
+		padding: 0;
+		box-shadow: 0 6px 18px rgba(37,154,90,0.12);
+		width: 100%;
+		position: fixed;
+		top: 0;
+		left: 0;
+		z-index: 1100;
+		height: var(--header-height);
+		display: flex;
+		align-items: center;
+	}
+
+	.dashboard-header .container {
+		width: 90%;
+		max-width: var(--container-max);
+		margin: 0 auto;
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		gap: 16px;
+	}
+
+	/* lightweight logo rules (kept consistent with dashboard) */
+	.logo {
+		display: flex;
+		align-items: center;
+		font-weight: 800;
+		font-size: 1.15rem;
+		color: var(--nav-white);
+		letter-spacing: 0.5px;
+		gap: 0.75rem;
+		text-decoration: none;
+		padding-left: 8px;
+	}
+	.logo svg { margin-right: 0.5rem; }
+	.logo span { color: var(--logo-black); font-weight: 800; }
+
+	/* navigation styles from dashboard */
+	.dashboard-nav {
+		display: flex;
+		gap: 12px;
+		margin-left: 16px;
+		align-items: center;
+	}
+	.dashboard-nav a, .dashboard-nav button {
+		color: var(--nav-white);
+		font-weight: 600;
+		text-decoration: none;
+		padding: 8px 14px;
+		border-radius: 22px;
+		background: rgba(255,255,255,0.06);
+		border: 1px solid rgba(255,255,255,0.04);
+		cursor: pointer;
+		font-size: 0.95rem;
+		transition: background 0.18s, transform 0.12s;
+		display: inline-flex;
+		align-items: center;
+		gap: 8px;
+	}
+	.dashboard-nav a.active, .dashboard-nav a:hover, .dashboard-nav button:hover {
+		background: rgba(255,255,255,0.12);
+		transform: translateY(-1px);
+	}
+
+	/* button variant used for logout */
+	.btn-secondary {
+		background: linear-gradient(90deg,#fff,#f1fff1);
+		color: #186a3d;
+		border: 1px solid rgba(255,255,255,0.06);
+		padding: 8px 12px;
+		border-radius: 18px;
+		font-weight:700;
+	}
+	.btn-secondary:hover {
+		background: linear-gradient(90deg,#f1fff1,#e6f8e6);
+		transform: translateY(-2px);
+	}
+
+	.container {
+		width: 90%;
+		max-width: var(--container-max);
+		margin: 0 auto;
+	}
+
+	.dashboard-bar {
+		text-align: center;
+		margin: 28px 0 18px;
+		padding-top: 6px;
+	}
+
+	.dashboard-bar h1 {
+		font-size: 22px;
+		margin: 0;
+		color: #185a9d;
+		font-weight: 800;
+	}
+
+	.subtitle {
+		font-size: 14px;
+		color: var(--muted);
+		margin: 8px 0 18px;
+	}
+
+	.test-btn {
+		background: linear-gradient(90deg,var(--primary-green),var(--primary-green-2));
+		color: #fff;
+		border: none;
+		padding: 8px 14px;
+		font-size: 14px;
+		cursor: pointer;
+		border-radius: 18px;
+		transition: transform 0.12s, box-shadow 0.12s;
+		box-shadow: 0 6px 16px rgba(33,150,243,0.06);
+	}
+	.test-btn:hover { transform: translateY(-2px); }
+
+	.challenge-tabs {
+		display: flex;
+		justify-content: center;
+		gap: 8px;
+		margin-bottom: 18px;
+	}
+
+	.challenge-tabs button {
+		background-color: #f3fbf6;
+		border: 1px solid #e6f4ea;
+		padding: 8px 14px;
+		cursor: pointer;
+		font-size: 14px;
+		border-radius: 999px;
+	}
+	.challenge-tabs button.active {
+		background: linear-gradient(90deg,var(--primary-green),var(--primary-green-2));
+		color: #fff;
+		border-color: transparent;
+		box-shadow: 0 8px 22px rgba(33,150,243,0.06);
+	}
+
+	.panel {
+		background: rgba(33,150,243,0.03);
+		border: 1px solid rgba(33,150,243,0.06);
+		border-radius: 10px;
+		padding: 12px;
+		margin-bottom: 18px;
+	}
+	.panel-header {
+		display: flex;
+		align-items: center;
+		gap: 10px;
+		font-weight: 700;
+		color: #185a9d;
+		font-size: 14px;
+		margin-bottom: 10px;
+	}
+	.panel-header .icon {
+		width: 18px;
+		height: 18px;
+		display: inline-flex;
+		align-items: center;
+		justify-content: center;
+		background: rgba(33,150,243,0.06);
+		border-radius: 50%;
+		color: #185a9d;
+		font-size: 12px;
+	}
+
+	.panel-body { padding-top: 4px; }
+
+	.challenge-stats {
+		display: flex;
+		justify-content: space-between;
+		margin-bottom: 18px;
+		gap: 12px;
+	}
+
+	.stat {
+		text-align: center;
+		background: #fff;
+		border-radius: 10px;
+		padding: 12px 14px;
+		flex: 1;
+		box-shadow: var(--card-shadow);
+		border: 1px solid rgba(33,150,243,0.06);
+	}
+
+	.stat-number {
+		font-size: 20px;
+		font-weight: 800;
+		margin: 0;
+		color: var(--primary-green);
+	}
+
+	.stat-label {
+		font-size: 13px;
+		color: var(--muted);
+	}
+
+	.filter-bar {
+		display: flex;
+		gap: 12px;
+		margin-bottom: 18px;
+		align-items: center;
+		background: #fff;
+		padding: 12px;
+		border-radius: 10px;
+		border: 1px solid rgba(33,150,243,0.06);
+		box-shadow: var(--card-shadow);
+		/* responsive wrapping */
+		flex-wrap: wrap;
+	}
+
+	/* make inputs/selects flexible and prevent overflow issues on narrow screens */
+	.filter-bar input,
+	.filter-bar select {
+		padding: 10px;
+		font-size: 14px;
+		border: 1px solid #e6eef0;
+		border-radius: 8px;
+		background: #fbfff9;
+		flex: 1 1 180px;
+		min-width: 0;
+	}
+
+	.filter-bar button {
+		background: linear-gradient(90deg,var(--primary-green),var(--primary-green-2));
+		color: #fff;
+		border: none;
+		padding: 8px 14px;
+		font-size: 14px;
+		cursor: pointer;
+		border-radius: 10px;
+		transition: transform 0.12s;
+		flex: 0 0 auto;
+	}
+	.filter-bar button:hover { transform: translateY(-2px); }
+
+	.filter-tags {
+		display: flex;
+		flex-wrap: wrap;
+		gap: 8px;
+		margin-bottom: 18px;
+	}
+
+	.filter-tag {
+		background-color: #f3fbf6;
+		color: #1b7a3e;
+		padding: 6px 12px;
+		border-radius: 16px;
+		font-size: 13px;
+		cursor: pointer;
+		border: 1px solid rgba(33,150,243,0.06);
+	}
+	.filter-tag:hover { background-color: #e6f7ee; }
+
+	.challenges-grid {
+		display: grid;
+		grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+		gap: 20px;
+	}
+
+	.challenge-card {
+		background-color: #fff;
+		border-radius: 12px;
+		padding: 14px;
+		transition: transform 0.18s, box-shadow 0.18s;
+		box-shadow: var(--card-shadow);
+		border: 1px solid rgba(33,150,243,0.06);
+		display: flex;
+		flex-direction: column;
+		gap: 10px;
+	}
+	.challenge-card:hover { transform: translateY(-6px); box-shadow: 0 20px 45px rgba(33,150,243,0.07); }
+
+	.challenge-title {
+		font-size: 16px;
+		font-weight: 700;
+		margin: 0 0 8px;
+		color: #185a9d;
+	}
+
+	.challenge-points {
+		display: inline-block;
+		background: #e6f7ee;
+		color: var(--primary-green);
+		padding: 4px 8px;
+		border-radius: 999px;
+		font-weight: 700;
+		font-size: 12px;
+		margin-left: 8px;
+	}
+
+	.challenge-meta { margin-bottom: 8px; }
+
+	.meta-badge {
+		display: inline-block;
+		padding: 6px 10px;
+		font-size: 12px;
+		color: #fff;
+		border-radius: 12px;
+		margin-right: 8px;
+		font-weight:700;
+	}
+
+	.meta-medium { background-color: #ff9800; }
+	.meta-hard { background-color: #f44336; }
+	.meta-easy { background-color: #4caf50; }
+	.meta-conservation { background-color: #2196f3; }
+	.meta-waste { background-color: #9c27b0; }
+	.meta-energy { background-color: #ff5722; }
+	.meta-community { background-color: #673ab7; }
+
+	.challenge-desc {
+		font-size: 13px;
+		color: #555;
+		margin: 0 0 8px;
+	}
+
+	.challenge-info {
+		font-size: 12px;
+		color: #666;
+		margin: 0 0 8px;
+	}
+
+	.btn {
+		background: linear-gradient(90deg,var(--primary-green),var(--primary-green-2));
+		color: #fff;
+		border: none;
+		padding: 10px 14px;
+		font-size: 14px;
+		cursor: pointer;
+		border-radius: 8px;
+		transition: transform 0.12s;
+		width: 100%;
+		text-align: center;
+		box-shadow: 0 6px 18px rgba(33,150,243,0.06);
+		font-weight:700;
+	}
+	.btn:hover { transform: translateY(-2px); }
+
+	.dashboard-footer {
+		/* make footer match dashboard design */
+		margin-top: 3rem;
+		padding: 1.25rem 0;
+		background: #e8f5e9;
+		text-align: center;
+		color: #757575;
+		font-size: 0.95rem;
+		width: 100%;
+		box-sizing: border-box;
+	}
+
+	/* focus/accessibility helpers */
+	a:focus, button:focus, input:focus, select:focus {
+		outline: 3px solid rgba(33,150,243,0.12);
+		outline-offset: 2px;
+	}
+</style>
+</head>
+<body>
+    <!-- update header element to use dashboard-style header and requested nav -->
+    <header class="dashboard-header">
+        <div class="container">
+            <a href="dashboard.html" class="logo">
+                <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 20A7 7 0 0 1 9.8 6.1C15.5 5 17 4.48 19 2c1 2 2 4.18 2 8 0 5.5-4.78 10-10 10Z"></path></svg>
+                <span>EcoLearn</span>
+            </a>
+            <nav class="dashboard-nav">
+                <a href="dashboard.html" class="active">Dashboard</a>
+                <a href="challenges.html">Challenges</a>
+                <a href="leaderboard.html">Leaderboard</a>
+                <a href="profile.html">Profile</a>
+                <button id="logout-btn" class="btn btn-secondary" style="margin-left:6px;">Log Out</button>
+            </nav>
+        </div>
+    </header>
+
+    <main>
+        <div class="container">
+            <div class="dashboard-bar">
+                <h1>EcoLearn Platform</h1>
+                <div class="subtitle">Experience real consequences of your choices and build sustainable habits</div>
+                <button class="test-btn" onclick="window.location.href='test.html'">Take Test</button>
+                <div class="challenge-tabs">
+                    <button class="active">Challenges</button>
+                    <button>Lifestyle Impact</button>
+                    <button>Community Actions</button>
+                </div>
+            </div>
+
+            <!-- Available Challenges panel -->
+            <div class="panel">
+                <div class="panel-header">
+                    <span class="icon">✓</span>
+                    <span>Available Challenges</span>
+                </div>
+                <div class="panel-body">
+                    <div class="challenge-stats">
+                        <div class="stat">
+                            <div class="stat-number">6</div>
+                            <div class="stat-label">Active Challenges</div>
+                        </div>
+                        <div class="stat">
+                            <div class="stat-number">195</div>
+                            <div class="stat-label">Total Points Available</div>
+                        </div>
+                        <div class="stat">
+                            <div class="stat-number">5</div>
+                            <div class="stat-label">Categories</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Filter panel -->
+            <div class="panel">
+                <div class="panel-header">
+                    <span class="icon">⚑</span>
+                    <span>Filter Challenges</span>
+                </div>
+                <div class="panel-body">
+                    <div class="filter-bar">
+                        <input type="text" placeholder="Search challenges...">
+                        <select>
+                            <option>All Categories</option>
+                            <option>Conservation</option>
+                            <option>Waste Reduction</option>
+                            <option>Energy</option>
+                            <option>Community</option>
+                            <option>Food</option>
+                        </select>
+                        <select>
+                            <option>All Difficulties</option>
+                            <option>Easy</option>
+                            <option>Medium</option>
+                            <option>Hard</option>
+                        </select>
+                        <button class="clear-btn">Clear Filters</button>
+                    </div>
+                    <div class="filter-tags" style="margin-top:10px;">
+                        <span class="filter-tag">All (6)</span>
+                        <span class="filter-tag">Conservation (1)</span>
+                        <span class="filter-tag">Waste Reduction (2)</span>
+                        <span class="filter-tag">Energy (1)</span>
+                        <span class="filter-tag">Community (1)</span>
+                        <span class="filter-tag">Food (1)</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Challenges grid panel -->
+            <div class="panel">
+                <div class="panel-header">
+                    <span class="icon">🌿</span>
+                    <span>Challenges</span>
+                </div>
+                <div class="panel-body">
+                    <div class="challenges-grid">
+                        <div class="challenge-card">
+                            <div class="challenge-title">
+                                Plant a Tree <span class="challenge-points">25pts</span>
+                            </div>
+                            <div class="challenge-meta">
+                                <span class="meta-badge meta-medium">Medium</span>
+                                <span class="meta-badge meta-conservation">Conservation</span>
+                            </div>
+                            <div class="challenge-desc">Plant and care for a sapling in your community. Document the process with photos and share your experience.</div>
+                            <div class="challenge-info">⏱ 2-3 hours &nbsp; 👥 1,247 participants</div>
+                            <button class="btn" onclick="window.location.href='challenge-details.html'">Start Challenge</button>
+                        </div>
+                        <div class="challenge-card">
+                            <div class="challenge-title">
+                                Zero Waste Week <span class="challenge-points">50pts</span>
+                            </div>
+                            <div class="challenge-meta">
+                                <span class="meta-badge meta-hard">Hard</span>
+                                <span class="meta-badge meta-waste">Waste Reduction</span>
+                            </div>
+                            <div class="challenge-desc">Practice zero waste living for one week. Track your progress and share tips with the community.</div>
+                            <div class="challenge-info">⏱ 1 week &nbsp; 👥 892 participants</div>
+                            <button class="btn" onclick="window.location.href='challenge-details.html'">Start Challenge</button>
+                        </div>
+                        <div class="challenge-card">
+                            <div class="challenge-title">
+                                Energy Audit <span class="challenge-points">30pts</span>
+                            </div>
+                            <div class="challenge-meta">
+                                <span class="meta-badge meta-medium">Medium</span>
+                                <span class="meta-badge meta-energy">Energy</span>
+                            </div>
+                            <div class="challenge-desc">Conduct a home energy audit and implement 3 energy-saving measures. Report your findings.</div>
+                            <div class="challenge-info">⏱ 4-5 hours &nbsp; 👥 634 participants</div>
+                            <button class="btn" onclick="window.location.href='challenge-details.html'">Start Challenge</button>
+                        </div>
+                        <div class="challenge-card">
+                            <div class="challenge-title">
+                                Plastic-Free Day <span class="challenge-points">15pts</span>
+                            </div>
+                            <div class="challenge-meta">
+                                <span class="meta-badge meta-easy">Easy</span>
+                                <span class="meta-badge meta-waste">Waste Reduction</span>
+                            </div>
+                            <div class="challenge-desc">Go an entire day without using single-use plastic. Document alternatives you discovered.</div>
+                            <div class="challenge-info">⏱ 1 day &nbsp; 👥 2156 participants</div>
+                            <button class="btn" onclick="window.location.href='challenge-details.html'">Start Challenge</button>
+                        </div>
+                        <div class="challenge-card">
+                            <div class="challenge-title">
+                                Community Cleanup <span class="challenge-points">40pts</span>
+                            </div>
+                            <div class="challenge-meta">
+                                <span class="meta-badge meta-medium">Medium</span>
+                                <span class="meta-badge meta-community">Community</span>
+                            </div>
+                            <div class="challenge-desc">Organize or participate in a local cleanup event. Collect data on waste types found.</div>
+                            <div class="challenge-info">⏱ 3-4 hours &nbsp; 👥 756 participants</div>
+                            <button class="btn" onclick="window.location.href='challenge-details.html'">Start Challenge</button>
+                        </div>
+                        <div class="challenge-card">
+                            <div class="challenge-title">
+                                Grow Your Own Food <span class="challenge-points">35pts</span>
+                            </div>
+                            <div class="challenge-meta">
+                                <span class="meta-badge meta-easy">Easy</span>
+                                <span class="meta-badge meta-food">Food</span>
+                            </div>
+                            <div class="challenge-desc">Start a small garden or grow herbs indoors. Track growth and share harvesting tips.</div>
+                            <div class="challenge-info">⏱ Ongoing &nbsp; 👥 1456 participants</div>
+                            <button class="btn" onclick="window.location.href='challenge-details.html'">Start Challenge</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </main>
+    <footer class="dashboard-footer">
+        © 2025 EcoLearn Platform - Learning sustainability through action
+    </footer>
+    <script>
+        // filepath: c:\Users\rayvi\OneDrive\Desktop\Project\challenges.html
+        // Ensure the logout button behaves like on the dashboard
+        (function(){
+            var btn = document.getElementById('logout-btn');
+            if (btn) {
+                btn.addEventListener('click', function(){ window.location.href = 'registeration.html'; });
+            }
+        })();
+    </script>
+</body>
+</html>
